@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dashboard MLSTraining</title>
+
+    <!--STYLESHEET-->
+    <!--=================================================-->
+
+    <!--Open Sans Font [ OPTIONAL ]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+
+    <!--Bootstrap Stylesheet [ REQUIRED ]-->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!--Nifty Stylesheet [ REQUIRED ]-->
+    <link href="../css/nifty.min.css" rel="stylesheet">
+		<link href="../css/demo/nifty-demo-icons.min.css" rel="stylesheet">
+    <link href="../plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
+
+
+    <!--Nifty Premium Icon [ DEMONSTRATION ]-->
+    <link href="../css/demo/nifty-demo-icons.min.css" rel="stylesheet">
+
+
+    <!--DataTables [ OPTIONAL ]-->
+    <link href="../plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css" rel="stylesheet">
+
+    <!--Bootstrap Validator [ OPTIONAL ]-->
+    <link href="../plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+
+    <!--Pace - Page Load Progress Par [OPTIONAL]-->
+    <link href="../plugins/pace/pace.min.css" rel="stylesheet">
+    <script src="../plugins/pace/pace.min.js"></script>
+
+
+    <!--jQuery [ REQUIRED ]-->
+    <script src="../js/jquery.min.js"></script>
+
+
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src="../js/bootstrap.min.js"></script>
+
+
+    <!--NiftyJS [ RECOMMENDED ]-->
+    <script src="../js/nifty.min.js"></script>
+		<script src="../plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+		<script src="../js/demo/form-wizard.js"></script>
+
+    <!--=================================================-->
+
+    <!--Font Awesome [ OPTIONAL ]-->
+    <link href="../plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!--Ion Icons [ OPTIONAL ]-->
+    <link href="../plugins/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
+    <!--Ion Icons [ OPTIONAL ]-->
+    <link href="../plugins/ionicons/css/ionicons.min.css" rel="stylesheet">
+    <!--Themify Icons [ OPTIONAL ]-->
+    <link href="../plugins/themify-icons/themify-icons.min.css" rel="stylesheet">
+    <!--Premium Line Icons [ OPTIONAL ]-->
+    <link href="../premium/icon-sets/icons/line-icons/premium-line-icons.min.css" rel="stylesheet">
+    <link href="../plugins/spinkit/css/spinkit.min.css" rel="stylesheet">
+    <script src="../plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+
+    <!--DataTables [ OPTIONAL ]-->
+    <link href="../plugins/datatables/media/css/dataTables.bootstrap.css" rel="stylesheet">
+	  <link href="../plugins/datatables/extensions/Responsive/css/responsive.dataTables.min.css" rel="stylesheet">
+
+    <!--DataTables [ OPTIONAL ]-->
+    <script src="../plugins/datatables/media/js/jquery.dataTables.js"></script>
+	  <script src="../plugins/datatables/media/js/dataTables.bootstrap.js"></script>
+	  <script src="../plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+
+    <style media="screen">
+      #viewDiagramm {
+        min-width: 320px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+    </style>
+</head>
+
+<!--TIPS-->
+<!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+<body>
+    <div id="container" class="effect aside-float aside-bright mainnav-lg">
+
+        <!--NAVBAR-->
+        <!--===================================================-->
+        <header id="navbar">
+            <div id="navbar-container" class="boxed">
+
+                <!--Brand logo & name-->
+                <!--================================-->
+								<div class="navbar-header">
+                    <a href="" class="navbar-brand">
+                        <img src="../img/logo.png" alt="Nifty Logo" class="brand-icon">
+                        <div class="brand-title">
+                            <span class="brand-text">MLSTraining</span>
+                        </div>
+                    </a>
+                </div>
+                <!--================================-->
+                <!--End brand logo & name-->
+
+
+                <!--Navbar Dropdown-->
+                <!--================================-->
+                <div class="navbar-content clearfix">
+                    <ul class="nav navbar-top-links pull-left">
+
+                        <!--Navigation toogle button-->
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <li class="tgl-menu-btn">
+                            <a class="mainnav-toggle" href="#">
+                                <i class="demo-pli-view-list"></i>
+                            </a>
+                        </li>
+                        <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                        <!--End Navigation toogle button-->
+
+                    </ul>
+                </div>
+                <!--================================-->
+                <!--End Navbar Dropdown-->
+
+            </div>
+        </header>
+        <!--===================================================-->
+        <!--END NAVBAR-->
+
+        <div class="boxed">
+
+            <!--CONTENT CONTAINER-->
+            <!--===================================================-->
+            <div id="content-container">
+                <div id="page-head">
+
+                    <!--Page Title-->
+                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    <div id="page-title">
+                        <h1 class="page-header text-overflow nameJob">
+												</h1>
+
+                    </div>
+                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    <!--End page title-->
+                </div>
+
+
+                <!--Page content-->
+                <!--===================================================-->
+              <div id="page-content">
+								<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="panel">
+
+								<div id="demo-cir-wz">
+										<div class="wz-heading pad-ver">
+
+												<!--Progress bar-->
+												<div class="progress progress-xs progress-light-base">
+														<div class="progress-bar progress-bar-primary"></div>
+												</div>
+
+												<!--Nav-->
+												<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+												<ul class="wz-nav-off">
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#inputFile" title="inputFile" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#query" title="Query for Job ID" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#viewResult" title="View Meta Models" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#summary" title="View Summary Process" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#tryModel" title="Try Model" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+														<li class="col-xs-2">
+																<a data-toggle="tab" href="#viewResultMeta" title="Results Try Meta Model" class="add-tooltip">
+																		<div class="icon-wrap icon-wrap-sm bg-gray">
+																				<i class="wz-icon demo-pli-information icon-lg"></i>
+																				<i class="wz-icon-done demo-pli-like icon-lg"></i>
+																		</div>
+																</a>
+														</li>
+												</ul>
+										</div>
+
+										<!--Form-->
+										<form class="form-horizontal">
+												<div class="panel-body">
+														<div class="tab-content">
+
+																<!--First tab-->
+                                <div id="inputFile" class="tab-pane">
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <img src="../img/manual/1.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>To create a new job, you must upload a file in csv format or derivatives and complete the form associated with the Job. In the case of analyzing responses with continuous variables, you must select regression models, in case the answer is categorical, select the classification option. For both cases, the system recognizes as the last column the one with the response for model training. If the system correctly validates the form, a new Job is created and launched in the queue system, an ID is given to recognize it and it is notified by mail when the job changes state.</p>
+                                  </div>
+                                </div>
+
+                                <div id="query" class="tab-pane">
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <img src="../img/manual/2.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>To consult for a Job, enter the ID in the search engine, the system will deliver the state in which the Job is located. These states can be: START, PROCESSING, OBSOLETE, ERROR or FINISHED. In the case that it is finalized, the system redirects to the results of the Job. It is mentioned that the OBSOLETE state alludes to the fact that the Job exists but is not available given that the time limit was reached to visualize the results (15 days). If you wish to recover a Job, please contact david.medina@cebib.cl indicating the reason.</p>
+                                  </div>
+                                </div>
+
+                                <div id="viewResult" class="tab-pane">
+                                  <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <img src="../img/manual/3.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <img src="../img/manual/4.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>
+                                      The visualization of the meta models depends on the type of trained response (classification or regression). In both cases, a diagram is shown with the algorithms selected for each performance measure. Following the diagram, a panel with the weighted measures is generated, which depends on the type of response. For the classification cases, Accuracy, Accuracy, Recall and F1 are used, otherwise, Pearson, R score, Kendall Tau and Spearman. Finally, for regression models, error graphs and scatter plot of the prediction v / s are appreciated, while for classification models a matrix of confusion associated with the process is exposed.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <div id="summary" class="tab-pane">
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <img src="../img/manual/5.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>
+                                      In addition to the visualization of the meta models, the performance measures of the selected models are exposed, continuing with a statistical summary of the process and histograms for each performance measure. Finally, there is a section with a summary of the process, in which the number of iterations developed, execution time and a brief description of performance measures and how to interpret them are exposed.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <div id="tryModel" class="tab-pane">
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <img src="../img/manual/6.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>
+                                      The tool has two options for the use of meta models trained for the classification or prediction of new examples. The first option is through the download of the meta models and have the python tool available in the project repository, execute the corresponding script with the necessary parameters, it is a way to run stand alone models and test them locally. In the case of not having knowledge in python programming or Linux terminal management, there is the web execution option, for it, at the moment of selecting it, it will be redirected to a form where it is necessary to upload the file to do the processing, the tool use the meta models stored for the job ID and deliver the results with respect to the new examples. This option may take several minutes.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                <div id="viewResultMeta" class="tab-pane">
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <img src="../img/manual/7.png" alt="" class="img-thumbnail">
+                                  </div>
+
+                                  <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br>
+                                    <p>
+                                      The results of classification or prediction of new examples depend on the type of task to be performed. However, in both results it is a summary table where each row corresponds to an example. In the case of regression models, statistics of the values obtained are available and the value of the prediction is associated to a range where the real value is more likely to be found. In the case of classification models, the class or category to which the new example corresponds and associated with it the probabilities of the distribution of the classes generated by the classifiers for each example.
+                                    </p>
+                                  </div>
+                                </div>
+														</div>
+												</div>
+
+												<!--Footer button-->
+												<div class="panel-footer text-right">
+														<div class="box-inline">
+																<button type="button" class="previous btn btn-primary">Previous</button>
+																<button type="button" class="next btn btn-primary">Next</button>
+																<button type="button" class="finish btn btn-success" disabled>Finish</button>
+														</div>
+												</div>
+										</form>
+								</div>
+							</div>
+					</div>
+              </div>
+            </div>
+
+            <!--MAIN NAVIGATION-->
+            <!--===================================================-->
+						<nav id="mainnav-container">
+                <div id="mainnav">
+
+                    <!--Menu-->
+                    <!--================================-->
+                    <div id="mainnav-menu-wrap">
+                        <div class="nano">
+                            <div class="nano-content">
+
+                                <!--Profile Widget-->
+                                <!--================================-->
+                                <div id="mainnav-profile" class="mainnav-profile">
+                                    <div class="profile-wrap text-center">
+                                        <div class="pad-btm">
+                                            <img class="img-circle img-md" src="../img/profile-photos/11.png" alt="Profile Picture">
+                                        </div>
+
+                                        <p class="mnp-name">
+                                            User View
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <ul id="mainnav-menu" class="list-group">
+
+                                  <li class="list-header">Dashboard</li>
+
+                                  <li>
+          						                <a href="../query/">
+          						                    <i class="fa fa fa-list"></i>
+          						                    <span class="menu-title">Query Job</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+                                  <li>
+          						                <a href="../dataSet/">
+          						                    <i class="fa fa fa-archive"></i>
+          						                    <span class="menu-title">Data Sets Demo</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+                                  <li>
+          						                <a href="../about">
+          						                    <i class="fa fa fa-users"></i>
+          						                    <span class="menu-title">About Us</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+                                  <li>
+          						                <a href="../userManual">
+          						                    <i class="fa fa fa-file"></i>
+          						                    <span class="menu-title">How to use</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+                                  <li>
+          						                <a href="../">
+          						                    <i class="fa fa fa-home"></i>
+          						                    <span class="menu-title">Home</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+						            </ul>
+
+                    <!--================================-->
+                    <!--End menu-->
+
+                </div>
+            </nav>
+            <!--===================================================-->
+            <!--END MAIN NAVIGATION-->
+
+        </div>
+
+
+
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
+
+            <!-- Visible when footer positions are fixed -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <div class="show-fixed pad-rgt pull-right">
+                You have <a href="#" class="text-main"><span class="badge badge-danger">3</span> pending action.</a>
+            </div>
+
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+            <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
+            <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+            <p class="pad-lft">&#0169; 2019 Developed by <a href="http://pesb2.cl/"> PESB2 Group, </a>Centre for Biothecnology and Bioengineering, FCFM, University of Chile</p>
+
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+
+
+        <!-- SCROLL PAGE BUTTON -->
+        <!--===================================================-->
+        <button class="scroll-top btn">
+            <i class="pci-chevron chevron-up"></i>
+        </button>
+        <!--===================================================-->
+
+
+
+    </div>
+    <!--===================================================-->
+    <!-- END OF CONTAINER -->
+
+   <!-- modal section -->
+
+   <div>
+   	<form id="frmEditar" action="" method="POST" data-parsley-validate class="form-horizontal form-label-left">
+   		<input type="hidden" id="idjob" name="idjob" value="">
+   		<div class="modal fade" id="myModalEditar" tabindex="-1" role="dialog" aria-labelledby="myModalLabelEdit" aria-hidden="true">
+   				<div class="modal-dialog">
+   					<div class="modal-content">
+   						<div class="modal-header">
+   							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   							<h4 class="modal-title" id="myModalLabelEdit">Drop job</h4>
+   						</div>
+   						<div class="modal-body">
+
+                <p>
+                   Are you sure you want to delete the selected job?
+                </p>
+
+
+   						  <div class="ln_solid"></div>
+   						  <div class="form-group">
+   							<div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+   								<button type="button" id="editar-user" class="btn btn-primary" data-dismiss="modal">Delete</button>
+   								<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+   							</div>
+   						  </div>
+
+   						</div>
+
+   					</div>
+   				</div>
+   		</div>
+   		</form>
+   </div>
+
+   <!-- modal para agregar-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Add new job at queue system</h4>
+          </div>
+          <div class="modal-body">
+
+             <form id="frmAgregarFile" action="../php/uploadFileQueue.php" class="dropzone" >
+                    <div class="dz-default dz-message">
+                        <div class="dz-icon">
+                            <i class="demo-pli-upload-to-cloud icon-5x"></i>
+                        </div>
+                        <div>
+                          <span class="dz-text">Drop files to upload</span>
+                          <p class="text-sm text-muted">or click to pick manually</p>
+                        </div>
+                    </div>
+                    <div class="fallback">
+                        <input name="file" type="file" multiple>
+                    </div>
+                </form>
+
+             <br>
+             <br>
+
+          <form id="frmAgregar" action="" method="POST" data-parsley-validate class="form-horizontal form-label-left">
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name Job <span class="required">*</span>
+            </label>
+
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input type="text" id="name" required="required" class="form-control col-md-7 col-xs-12" placeholder="Input name job">
+            </div>
+            </div>
+
+            <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="desc">Description <span class="required">*</span>
+            </label>
+
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input type="text" id="desc" required="required" class="form-control col-md-7 col-xs-12" placeholder="Input description job">
+            </div>
+
+            </div>
+            <div class="form-group">
+              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="option">Selected job <span class="required">*</span>
+              </label>
+
+              <div class="col-md-9 col-sm-9 col-xs-12">
+                <select id="option" class="form-control">
+                  <option value="1">CLASSIFICATION</option>
+                  <option value="2">PREDICTION</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="ln_solid"></div>
+            <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+              <button type="reset" class="btn btn-primary">Reset</button>
+              <button type="button" id="add-job" class="btn btn-success" data-dismiss="modal">Add Job</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

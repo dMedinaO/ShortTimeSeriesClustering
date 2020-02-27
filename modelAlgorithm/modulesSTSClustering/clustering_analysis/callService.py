@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (C) 2019  David Medina Ortiz, david.medina@cebib.cl
+# Copyright (C) 2020  David Medina Ortiz, david.medina@cebib.cl
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,72 +16,23 @@
 # Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA
 ########################################################################
 
-from modulesNLM.clustering_analysis import processClustering
-from modulesNLM.clustering_analysis import evaluationClustering
-from modulesNLM.clustering_analysis import summaryScan
+from modulesSTSClustering.clustering_analysis import processClustering
+from modulesSTSClustering.clustering_analysis import evaluationClustering
+from modulesSTSClustering.clustering_analysis import summaryScan
 
-from modulesNLM.utils import transformFrequence
-from modulesNLM.utils import ScaleNormalScore
-from modulesNLM.utils import ScaleMinMax
-from modulesNLM.utils import ScaleDataSetLog
-from modulesNLM.utils import ScaleLogNormalScore
-from modulesNLM.utils import encodingFeatures
-from modulesNLM.checks_module import checkProcessCluster
+from modulesSTSClustering.clustering_analysis import checkProcessCluster
 
 import pandas as pd
 
 class serviceClustering(object):
 
-    def __init__(self, dataSet, pathResponse, optionNormalize, featureClass, kindDataSet, threshold, sizeEval):
+    def __init__(self, dataSet, pathResponse, threshold, sizeEval):
 
         self.sizeEval = sizeEval
-        self.dataOriginal = dataSet#matriz de elementos
-        self.featureClass = featureClass#nombre de la columna respuesta
-        self.kindDataSet = kindDataSet#tipo de set de datos: clasificacion/regresion
-        self.optionNormalize = optionNormalize
+        self.dataSet = dataSet#matriz de elementos
         self.threshold = threshold#umbral de desbalance aceptado
-        self.processDataSet()#hacemos el preprocesamiento a los datos
         self.pathResponse = pathResponse
         self.applyClustering = processClustering.aplicateClustering(self.dataSet)
-
-    #metodo que permite procesar el set de datos segun la opcion del usuario a normalizar
-    def processDataSet(self):
-
-        self.dataResponse = self.dataOriginal[self.featureClass]#obtenemos la variable respuesta
-
-        dictData = {}
-
-        for key in self.dataOriginal:
-            if key != self.featureClass:
-                arrayFeature = []
-                for i in self.dataOriginal[key]:
-                    arrayFeature.append(i)
-                dictData.update({key:arrayFeature})
-
-        #formamos el nuevo set de datos...
-        self.dataSet = pd.DataFrame(dictData)
-
-        #codificacion de variables categoricas
-        encoding = encodingFeatures.encodingFeatures(self.dataSet, 20)
-        encoding.evaluEncoderKind()
-        dataSetNewFreq = encoding.dataSet
-
-        #ahora aplicamos el procesamiento segun lo expuesto
-        if self.optionNormalize == 1:#normal scale
-            applyNormal = ScaleNormalScore.applyNormalScale(dataSetNewFreq)
-            self.dataSet = applyNormal.dataTransform
-
-        if self.optionNormalize == 2:#min max scaler
-            applyMinMax = ScaleMinMax.applyMinMaxScaler(dataSetNewFreq)
-            self.dataSet = applyMinMax.dataTransform
-
-        if self.optionNormalize == 3:#log scale
-            applyLog = ScaleDataSetLog.applyLogScale(dataSetNewFreq)
-            self.dataSet = applyLog.dataTransform
-
-        if self.optionNormalize == 4:#log normal scale
-            applyLogNormal = ScaleLogNormalScore.applyLogNormalScale(dataSetNewFreq)
-            self.dataSet = applyLogNormal.dataTransform
 
     #metodo que permite hacer la ejecucion del servicio...
     def execProcess(self):
@@ -162,12 +113,6 @@ class serviceClustering(object):
         #self.dataFrame.to_csv(self.pathResponse+"ResponseProcess_Job_Clustering.csv", index=indexResponse)
         #self.dataFrameLog.to_csv(self.pathResponse+"ResponseProcess_Job_Clustering_Error.csv", index=indexResponseError)
 
-        #generamos el resumen del proceso
-        summary = summaryScan.summaryProcessClusteringScan(self.dataFrame, self.pathResponse+"ResponseProcess_Job_Clustering.csv", self.pathResponse)
-        #summary.createHistogram()
-        #summary.createRankingFile()
-        #summary.createStatisticSummary()
-
         #chequeamos el procesos de clustering y entregamos la informacion
         if len(responseProcess)>0:
             checkData = checkProcessCluster.checkProcess(self.dataFrame)
@@ -199,9 +144,9 @@ class serviceClustering(object):
                 matrixGroup2 = []
 
                 for i in range(len(self.applyClustering.labels)):
-                    row = []
-                    for key in self.dataOriginal:
-                        row.append(self.dataOriginal[key][i])
+                    row = []            
+                    for key in self.dataSet:
+                        row.append(self.dataSet[key][i])
                     if self.applyClustering.labels[i] == 0:
                         matrixGroup1.append(row)
                     else:
@@ -209,36 +154,20 @@ class serviceClustering(object):
 
                 #formamos los dataFrame y exportamos los resultados
                 header = []
-                for key in self.dataOriginal:
+                for key in self.dataSet:
                     header.append(key)
 
                 dataG1 = pd.DataFrame(matrixGroup1, columns=header)
                 dataG2 = pd.DataFrame(matrixGroup2, columns=header)
 
-                if self.kindDataSet == 1:#el set de datos corresponde a clasificacion
-                    #evaluamos el desbalance de clases en cada conjunto de datos generados
-                    responseUG1 = checkData.checkEvalClass(dataG1[self.featureClass], self.threshold)
-                    responseUG2 = checkData.checkEvalClass(dataG2[self.featureClass], self.threshold)
-
-                    if responseUG1 ==0 and responseUG2 ==0:
-                        #dataG1.to_csv(self.pathResponse+"group1.csv", index=False)
-                        #dataG2.to_csv(self.pathResponse+"group2.csv", index=False)
-                        return [1,dataG1,dataG2] #podemos seguir dividiendo, retorno los grupos
-                        #return 1#podemos seguir dividiendo
-                    else:
-                        print "Error 0"
-                        return [-1,-1,-1]#se genero un desbalance de clases
-                else:
-                    #dataG1.to_csv(self.pathResponse+"group1.csv", index=False)
-                    #dataG2.to_csv(self.pathResponse+"group2.csv", index=False)
-                    return [1,dataG1,dataG2] #podemos seguir dividiendo, retorno los grupos
-                    #return 1#podemos seguir dividiendo
+                return [1,dataG1,dataG2]#podemos seguir dividiendo, retorno los grupos
             else:
                 print "Error I"
                 return [-1,-1,-1]#no se puede seguir dividiendo
         else:
             print "Error II"
-            return [-1,-1,-1] #no se puede seguir dividiendo
+            return [-1,-1,-1]#no se puede seguir dividiendo
+
     #funcion que permite poder contar los elementos de la clase o categoria indicada
     def checkMembersDistributionCluster(self, labels):
 

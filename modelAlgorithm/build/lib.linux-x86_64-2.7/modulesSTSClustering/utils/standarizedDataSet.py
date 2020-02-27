@@ -30,21 +30,21 @@ class standardizedDataSet(object):
         self.dataset_scaled = preprocessing.scale(self.dataset)
 
     def applyStandarScale(self):#standar scaler
-        scaler = preprocessing.StandardScaler().fit(self.dataset)
-        self.dataset_scaled = scaler.transform(self.dataset)
+        self.scaler = self.preprocessing.StandardScaler().fit(self.dataset)
+        self.dataset_scaled = self.scaler.transform(self.dataset)
 
     def applyMinMaxScaler(self):#min max scaler
-        min_max_scaler = preprocessing.MinMaxScaler()
-        self.dataset_scaled = min_max_scaler.fit_transform(self.dataset)
+        self.scaler = preprocessing.MinMaxScaler()
+        self.dataset_scaled = self.scaler.fit_transform(self.dataset)
 
     def applyMaxAbosulteScaler(self):#max absolute scaler
-        max_abs_scaler = preprocessing.MaxAbsScaler()
-        self.dataset_scaled = max_abs_scaler.fit_transform(self.dataset)
+        self.scaler = preprocessing.MaxAbsScaler()
+        self.dataset_scaled = self.scaler.fit_transform(self.dataset)
 
     def applyQuantileScaler(self):#quantile scaler
-        quantile_transformer = preprocessing.QuantileTransformer(random_state=0)
-        self.dataset_scaled = quantile_transformer.fit_transform(self.dataset)
+        self.scaler = preprocessing.QuantileTransformer(random_state=0)
+        self.dataset_scaled = self.scaler.fit_transform(self.dataset)
 
     def applyPowerTransformation(self):#power transformation scaler
-        pt = preprocessing.PowerTransformer(method='box-cox', standardize=False)
-        self.dataset_scaled = pt.fit_transform(self.dataset)
+        self.scaler = preprocessing.PowerTransformer(method='box-cox', standardize=False)
+        self.dataset_scaled = self.scaler.fit_transform(self.dataset)

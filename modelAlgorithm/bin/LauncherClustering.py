@@ -27,6 +27,7 @@ import os
 
 from modulesSTSClustering.utils import checkDataSet
 from modulesSTSClustering.utils import standarizedDataSet
+from modulesSTSClustering.utils import summaryStatisticsClustering
 from modulesSTSClustering.clustering_analysis import callService
 from modulesSTSClustering.clustering_analysis import evaluationClustering
 
@@ -180,5 +181,16 @@ if response_check == 0:
     dataFrameExport = pd.DataFrame(dataFrameExport, columns=dataset.keys())
     dataFrameExport['classGroup'] = classResponse
     dataFrameExport.to_csv(pathResponse+"fullDataSetWith.csv", index=False)
+
+    #trabajamos las estadisticas de cada grupo...
+    indexClassArray = list(set(dataFrameExport['classGroup']))
+
+    for indexClass in indexClassArray:
+        summaryCluster = summaryStatisticsClustering.summaryStatistics(dataFrameExport, indexClass)
+        dataFrameStatisticsGroup = summaryCluster.getValuesForGroup()
+
+        #export dataFrame
+        nameDoc = "%sgroups/%s_statistical_information.csv" % (pathResponse, indexClass)
+        dataFrameStatisticsGroup.to_csv(nameDoc, index=False)
 else:
     print "Error during check process, please, to check the input data"

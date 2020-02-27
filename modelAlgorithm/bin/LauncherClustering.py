@@ -24,6 +24,7 @@ import sys
 import time
 import glob
 import os
+import json
 
 from modulesSTSClustering.utils import checkDataSet
 from modulesSTSClustering.utils import standarizedDataSet
@@ -192,5 +193,13 @@ if response_check == 0:
         #export dataFrame
         nameDoc = "%sgroups/%s_statistical_information.csv" % (pathResponse, indexClass)
         dataFrameStatisticsGroup.to_csv(nameDoc, index=False)
+
+    #make summary file process
+    dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "OK", "groups": len(indexClassArray), "calinski": clusteringPerformance.calinski, "siluetas": clusteringPerformance.siluetas}
+
 else:
+    dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "ERROR", "groups": -1, "calinski": -1, "siluetas": -1}
     print "Error during check process, please, to check the input data"
+
+with open(pathResponse+"summary_process.json", 'w') as fp:
+    json.dump(dictSummary, fp)

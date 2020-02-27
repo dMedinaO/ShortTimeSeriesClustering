@@ -18,6 +18,8 @@
 
 import pandas as pd
 import numpy as np
+import math
+from scipy import special
 
 class checkProcess(object):
 
@@ -112,3 +114,130 @@ class checkProcess(object):
                 return -1
         else:
             return -1
+
+    #metodo que permite evaluar de manera estadistica los cluster
+    def checkStatisticValidation(self, matrixDataG1, matrixDataG2, significancia):
+
+        #obtenemos los valores estadisticos
+        meanG1, stdG1 = self.getStatisticValues(matrixDataG1)
+        meanG2, stdG2 = self.getStatisticValues(matrixDataG2)
+
+        #hacemos la aplicacion de los test
+        responseP1 = self.comparePointToPoint(meanG1, meanG2, stdG1, stdG2)
+        responseP2 = self.compareUnderCurve(meanG1, meanG2, stdG1, stdG2)
+        responseP3 = self.compareSlopesCurve(meanG1, meanG2, stdG1, stdG2)        
+
+        #print responseExtreme
+        #aplicamos test de siems
+        listPvalue = [responseP1, responseP2, responseP3]
+        listPvalue.sort()#ordenamos los valores
+
+        #obtenemos el valor real
+        pValueCombined = []
+        for i in range(3):
+            value = 1/float(i+1)*listPvalue[i]
+            pValueCombined.append(value)
+
+        if min(listPvalue)<=significancia:
+            return 1#rechazo H0
+        else:
+            return 0#no rechazo H0
+
+    #metodo que permite aplicar el test de comparacion punto-punto
+    def comparePointToPoint(self, meanG1, meanG2, stdG1, stdG2):
+
+        statistic = 0
+
+        for i in range(len(meanG1)):
+            num = (float(meanG1[i]) - float(meanG2[i]))*(float(meanG1[i]) - float(meanG2[i]))
+            den = float(stdG1[i])**2 + float(stdG2[i])**2
+            statistic+= float(num)/float(den)
+
+        #obtenemos la CDF
+        gradosLibertad = len(meanG1)
+        cdf = 1/(math.gamma(float(gradosLibertad)/2.0))*(special.gammainc(float(gradosLibertad)/2.0, float(statistic)/2.0))
+        pvalue = 1-cdf
+
+        return pvalue
+
+    #metodo que permite aplicar el test de comparacion de area bajo la curva
+    def compareUnderCurve(self, meanG1, meanG2, stdG1, stdG2):
+
+        statistic = 0
+
+        for i in range(len(meanG1)-1):
+            num = (float(meanG1[i]) - float(meanG2[i]) + float(meanG1[i+1]) - float(meanG2[i+1]))**2
+            den = float(stdG1[i])**2 + float(stdG2[i])**2 + float(stdG1[i+1])**2 + float(stdG2[i+1])**2
+            statistic+= float(num)/float(den)
+
+        #obtenemos la CDF
+        gradosLibertad = len(meanG1)-1
+        cdf = 1/(math.gamma(float(gradosLibertad)/2.0))*(special.gammainc(float(gradosLibertad)/2.0, float(statistic)/2.0))
+        pvalue = 1-cdf
+
+        return pvalue
+
+    #metodo que permite aplicar el test de comparacion de area bajo la curva
+    def compareSlopesCurve(self, meanG1, meanG2, stdG1, stdG2):
+
+        statistic = 0
+
+        for i in range(len(meanG1)-1):
+            num = (float(meanG2[i]) - float(meanG1[i]) + float(meanG2[i+1]) - float(meanG1[i+1]))**2
+            den = float(stdG1[i])**2 + float(stdG2[i])**2 + float(stdG1[i+1])**2 + float(stdG2[i+1])**2
+            statistic+= float(num)/float(den)
+
+        #obtenemos la CDF
+        gradosLibertad = len(meanG1)-1
+        cdf = 1/(math.gamma(float(gradosLibertad)/2.0))*(special.gammainc(float(gradosLibertad)/2.0, float(statistic)/2.0))
+        pvalue = 1-cdf
+
+        return pvalue
+
+    #metodo que permite poder obtener las estadisticas basicas (promedio y desviacion estandar) de la data
+    def getStatisticValues(self, matrixData):
+
+        arrayMean = []
+        arraySTD = []
+
+        for i in range(len(matrixData[0])):
+            columnData = []
+            for j in range(len(matrixData)):
+                columnData.append(matrixData[j][i])
+            arrayMean.append(np.mean(columnData))
+            arraySTD.append(np.std(columnData))
+
+        return arrayMean, arraySTD
+
+    def getExtremePoints(self, data, typeOfExtreme = None, maxPoints = None, typeOfInflexion='max'):
+        """
+        This method returns the indeces where there is a change in the trend of the input series.
+        typeOfExtreme = None returns all extreme points, max only maximum values and min
+        only min,
+        """
+        a = np.diff(data)
+        asign = np.sign(a)
+        signchange = ((np.roll(asign, 1) - asign) != 0).astype(int)
+        idx = np.where(signchange ==1)[0]
+        if typeOfInflexion == 'max' and data[idx[0]] < data[idx[1]]:
+            idx = idx[1:][::2]
+
+        elif typeOfInflexion == 'min' and data[idx[0]] > data[idx[1]]:
+            idx = idx[1:][::2]
+        elif typeOfInflexion is not None:
+            idx = idx[::2]
+
+        # sort ids by min value
+        if 0 in idx:
+            idx = np.delete(idx, 0)
+        if (len(data)-1) in idx:
+            idx = np.delete(idx, len(data)-1)
+        idx = idx[np.argsort(data[idx])]
+        # If we have maxpoints we want to make sure the timeseries has a cutpoint
+        # in each segment, not all on a small interval
+        if maxPoints is not None:
+            idx= idx[:maxPoints]
+            if len(idx) < maxPoints:
+                return (np.arange(maxPoints) + 1) * (len(data)//(maxPoints + 1))
+
+        return idx

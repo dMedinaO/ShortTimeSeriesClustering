@@ -26,12 +26,13 @@ import pandas as pd
 
 class serviceClustering(object):
 
-    def __init__(self, dataSet, pathResponse, threshold, sizeEval):
+    def __init__(self, dataSet, pathResponse, threshold, sizeEval, significancia):
 
         self.sizeEval = sizeEval
         self.dataSet = dataSet#matriz de elementos
         self.threshold = threshold#umbral de desbalance aceptado
         self.pathResponse = pathResponse
+        self.significancia = significancia
         self.applyClustering = processClustering.aplicateClustering(self.dataSet)
 
     #metodo que permite hacer la ejecucion del servicio...
@@ -125,6 +126,7 @@ class serviceClustering(object):
 
             #evaluamos que sucede con la informacion, el 5 implica que supere el 5% de la totalidad la muestra de datos
             if checkData.checkSplitter(rowValues[3], rowValues[4], 5, self.sizeEval) == 1:
+
                 #ejecutamos el cluster y formamos los data set con las divisiones
                 if rowValues[0] == "K-Means":
                     self.applyClustering.aplicateKMeans(2)#se aplica el algoritmo...
@@ -144,7 +146,7 @@ class serviceClustering(object):
                 matrixGroup2 = []
 
                 for i in range(len(self.applyClustering.labels)):
-                    row = []            
+                    row = []
                     for key in self.dataSet:
                         row.append(self.dataSet[key][i])
                     if self.applyClustering.labels[i] == 0:
@@ -156,16 +158,38 @@ class serviceClustering(object):
                 header = []
                 for key in self.dataSet:
                     header.append(key)
-
                 dataG1 = pd.DataFrame(matrixGroup1, columns=header)
                 dataG2 = pd.DataFrame(matrixGroup2, columns=header)
 
-                return [1,dataG1,dataG2]#podemos seguir dividiendo, retorno los grupos
+                #evaluamos el uso estadistico
+                responseStatistics = checkData.checkStatisticValidation(matrixGroup1, matrixGroup2, self.significancia)
+
+                if responseStatistics == 1:
+                    return [1,dataG1,dataG2]#podemos seguir dividiendo, retorno los grupos
+                else:#si no son estadisticamente significativos, preguntamos por el valor de las bi modales
+                    maxDataG1 = 0
+                    maxDataG2 = 0
+                    responseBiModal = 0
+                    for index in header:
+                        maximumDataG1 = checkData.getExtremePoints(dataG1[index])
+                        maximumDataG2 = checkData.getExtremePoints(dataG2[index])
+                        if len(maximumDataG1)>1:
+                            maxDataG1=1
+                        if len(maximumDataG2) >1:
+                            maxDataG2=1
+                        if maxDataG1 == 1 or maxDataG2 == 1:
+                            responseBiModal =1
+                            break
+                    if responseBiModal==1:
+                        return [1,dataG1,dataG2]#podemos seguir dividiendo, retorno los grupos
+                    else:
+                        print "Error Bi-Modal"
+                        return [-1,-1,-1]#no se puede seguir dividiendo
             else:
-                print "Error I"
+                print "Error Size"
                 return [-1,-1,-1]#no se puede seguir dividiendo
         else:
-            print "Error II"
+            print "Error Features"
             return [-1,-1,-1]#no se puede seguir dividiendo
 
     #funcion que permite poder contar los elementos de la clase o categoria indicada

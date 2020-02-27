@@ -46,9 +46,9 @@ class BinaryTree(object):
         self.top = None
 
     # Llamada para dividir grupo de forma recursiva
-    def split(self, nodo, dataSet, pathResponse, threshold, sizeEval):
+    def split(self, nodo, dataSet, pathResponse, threshold, sizeEval, significancia):
         #print "Llamando a servicio -> ",dataSet.shape[0]
-        callServiceObject = callService.serviceClustering(dataSet, pathResponse, threshold, sizeEval)
+        callServiceObject = callService.serviceClustering(dataSet, pathResponse, threshold, sizeEval, significancia)
         #callService debe retornar un arreglo en donde [sePuedeDividir,dataFramegrupo1,dataFramegrupo2]
         result = callServiceObject.execProcess()
         if isinstance(result,list):
@@ -65,9 +65,9 @@ class BinaryTree(object):
                 time.sleep(0.05)
                 nodo.right = Nodo(result[2])
                 time.sleep(0.05)
-                nodo.left = self.split(nodo.left,result[1], pathResponse, threshold, sizeEval)
+                nodo.left = self.split(nodo.left,result[1], pathResponse, threshold, sizeEval, significancia)
                 time.sleep(0.05)
-                nodo.right = self.split(nodo.right,result[2], pathResponse, threshold, sizeEval)
+                nodo.right = self.split(nodo.right,result[2], pathResponse, threshold, sizeEval, significancia)
                 return nodo
         else:
             #almacena nodo anterior que se pudo dividir
@@ -77,7 +77,7 @@ class BinaryTree(object):
     # Llamar funcion recursiva para dibujar arbol
     def diagramSplit(self, pathResult) :
         print "Imprimir"
-        tree = gp.Digraph(format='eps')
+        tree = gp.Digraph(format='png')
         if(self.top != None):
             self.draw(self.top,tree);
         # formatear pathResult quitando ultimo slash
@@ -103,6 +103,7 @@ dataset = pd.read_csv(sys.argv[1])
 type_scaler = int(sys.argv[2])
 pathResponse = sys.argv[3]
 threshold = float(sys.argv[4])
+significancia = float(sys.argv[5])
 
 print "Check dataset elements"
 checkElement = checkDataSet.checkDataSet(dataset)
@@ -135,7 +136,7 @@ if response_check == 0:
     tree = BinaryTree()
     #Nodo raiz con la informacion del dataSet inicial
     tree.insert(dataset_standard)
-    tree.split(tree.top,dataset_standard, pathResponse, threshold, initialSize)
+    tree.split(tree.top,dataset_standard, pathResponse, threshold, initialSize, significancia)
     tree.diagramSplit(pathResponse)
 
     #una vez procesada la data... para cada elemento en formato csv en el path response... lo leemos
@@ -176,7 +177,7 @@ if response_check == 0:
 
     #reducimos los datos a la codificacion original
     dataFrameExport = standarHandler.scaler.inverse_transform(dataFrameExport)
-    dataFrameExport = pd.DataFrame(dataFrameExport, columns=dataset.keys())    
+    dataFrameExport = pd.DataFrame(dataFrameExport, columns=dataset.keys())
     dataFrameExport['classGroup'] = classResponse
     dataFrameExport.to_csv(pathResponse+"fullDataSetWith.csv", index=False)
 else:

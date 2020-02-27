@@ -33,7 +33,7 @@ class SetupConfiguration:
             author='David Medina',
             author_email='david.medina@cebib.cl',
             license='Open GPL 3',
-            packages=['modulesSTSClustering', 'modulesSTSClustering.clustering_analysis', 'modulesSTSClustering.checks_module', 'modulesSTSClustering.supervised_learning_analysis', 'modulesSTSClustering.supervised_learning_predicction', 'modulesSTSClustering.utils', 'modulesSTSClustering.graphic', 'modulesSTSClustering.statistics_analysis', 'modulesSTSClustering.statisticsCorroboration'],)
+            packages=['modulesSTSClustering', 'modulesSTSClustering.utils', 'modulesSTSClustering.clustering_analysis' ],)
 
 def main():
 

@@ -2,7 +2,7 @@
 
   $job = $_REQUEST['job'];
   $group = $_REQUEST['group'];
-  $nameDocument = "/var/www/html/clusteringShortTimeSeries/jobs/$job/results/groups/$group"."_statistical_information_export_csv.csv";
+  $nameDocument = "/var/www/html/ShortTimeSeriesClustering/jobs/$job/results/groups/$group"."_statistical_information_export_csv.csv";
   $row = 0;
 
   $matrixResponse = [];

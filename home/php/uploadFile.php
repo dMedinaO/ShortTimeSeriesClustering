@@ -9,7 +9,7 @@
 	$templocation = $archivo["tmp_name"];
 	$name = $archivo["name"];
 
-	$pathMove = "/var/www/html/clusteringShortTimeSeries/jobs/tmp/".$name;
+	$pathMove = "/var/www/html/ShortTimeSeriesClustering/jobs/tmp/".$name;
 
 
 	if(!$templocation){
@@ -22,7 +22,7 @@
 		echo "Error al guardar el archivo";
 	}
 
-	$pathData = "/var/www/html/clusteringShortTimeSeries/jobs/tmp/".$idUSer."_documentQueue.txt";
+	$pathData = "/var/www/html/ShortTimeSeriesClustering/jobs/tmp/".$idUSer."_documentQueue.txt";
 	//finalmente escribimos un archivo de texto con el nombre de la imagen...
 	$file = fopen($pathData, "w");
 

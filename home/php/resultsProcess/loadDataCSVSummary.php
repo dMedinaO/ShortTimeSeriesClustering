@@ -1,7 +1,7 @@
 <?php
 
   $job = $_REQUEST['job'];
-  $nameDocument = "/var/www/html/clusteringShortTimeSeries/jobs/$job/resultClustering/summaryGroups.csv";
+  $nameDocument = "/var/www/html/ShortTimeSeriesClustering/jobs/$job/resultClustering/summaryGroups.csv";
   $row = 0;
 
   $matrixResponse = [];

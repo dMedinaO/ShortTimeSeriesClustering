@@ -7,8 +7,8 @@ $(document).ready(function() {
 function getNameFeatures() {
 
   var job = getQuerystring('job');
-  var group = getQuerystring('group');
-  var file = "../../jobs/"+job+"/resultClustering/"+group+".csv";
+  var group = getQuerystring('id');
+  var file = "../../jobs/"+job+"/results/groups/"+group+"_original_values.csv";
 
   var allText;
   var rawFile = new XMLHttpRequest();
@@ -31,9 +31,9 @@ function getNameFeatures() {
 function showCurves() {
 
   var job = getQuerystring('job');
-  var file = getQuerystring('group');
+  var file = getQuerystring('id');
   var header = getNameFeatures().split(",");
-  var nameCSV = "../../jobs/"+job+"/resultClustering/"+file+".csv";
+  var nameCSV = "../../jobs/"+job+"/results/groups/"+file+"_original_values.csv";
 
   Plotly.d3.csv(nameCSV, function(err, rows){
 

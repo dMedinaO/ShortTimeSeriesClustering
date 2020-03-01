@@ -12,6 +12,26 @@ $(document).ready(function() {
                 validators: {
                     notEmpty: {
                         message: 'The percentage is required'
+                    },
+                    regexp: {
+                        regexp: /^[0-9.]+$/,
+                        message: 'The percentage must be numeric values'
+                    }
+                }
+            },
+
+            nameJob: {
+                validators: {
+                    notEmpty: {
+                        message: 'The name of job is required'
+                    }
+                }
+            },
+
+            descJob: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Description of Job is required'
                     }
                 }
             }
@@ -22,6 +42,9 @@ $(document).ready(function() {
       var optionProcess = $("#initNewJob #optionProcess").val();
       var percentage = $("#initNewJob #percentage").val();
       var significanceLevel = $("#initNewJob #significanceLevel").val();
+      var nameJob = $("#initNewJob #nameJob").val();
+      var descJob = $("#initNewJob #descJob").val();
+
 
       $.ajax({
         method: "POST",
@@ -29,8 +52,9 @@ $(document).ready(function() {
         data: {
           "optionProcess"   : optionProcess,
           "percentage"   : percentage,
-          "significanceLevel"   : significanceLevel
-
+          "significanceLevel"   : significanceLevel,
+          "nameJob"   : nameJob,
+          "descJob"   : descJob
         }
       }).done( function( info ){
         var response = JSON.parse(info);

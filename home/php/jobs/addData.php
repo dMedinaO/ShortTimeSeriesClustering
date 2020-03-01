@@ -6,6 +6,8 @@
   $optionProcess = $_REQUEST['optionProcess'];
   $percentage = $_REQUEST['percentage'];
   $significanceLevel = $_REQUEST['significanceLevel'];
+  $nameJob = $_REQUEST['nameJob'];
+  $descJob = $_REQUEST['descJob'];
 
   #creamos un directorio para almacenar los resultados
   $idJob = time();#sera el id del job...
@@ -33,8 +35,12 @@
   $nameDocFull ="/var/www/html/clusteringShortTimeSeries/jobs/$idJob/$nameDocument";
   exec($command);
 
+  $command = "mkdir ".$pathMove."results/";
+  exec($command);
+  $pathResults = $pathMove."results/";
+
   #hacemos la ejecucion del script para el algoritmo
-  $command = "python /var/www/html/clusteringShortTimeSeries/exec/LauncherClustering.py $nameDocFull $pathMove $optionProcess $percentage $significanceLevel";
+  $command = "python /var/www/html/clusteringShortTimeSeries/modelAlgorithm/bin/LauncherClustering.py $nameDocFull $optionProcess $pathResults $percentage $significanceLevel";
   $output = [];
   exec($command, $output);
 

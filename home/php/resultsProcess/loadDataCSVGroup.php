@@ -2,13 +2,15 @@
 
   $job = $_REQUEST['job'];
   $group = $_REQUEST['group'];
-  $nameDocument = "/var/www/html/clusteringShortTimeSeries/jobs/$job/resultClustering/$group"."_statisticsSummary.csv";
+  $nameDocument = "/var/www/html/clusteringShortTimeSeries/jobs/$job/results/groups/$group"."_statistical_information_export_csv.csv";
   $row = 0;
 
   $matrixResponse = [];
-  $header = ['Feature', 'Average', 'StandarDeviation', 'Variance',	'MaxValue', 'MinValue'];
+  $header = ["Max_Point", "Min_Point", "AVG_Point", "Variance", "Standar_Deviation", "Feature"];
   $dataAdd = 0;
 
+  $responseData = [];
+  $responseData['nameDoc'] = $nameDocument;
   if (($handle = fopen($nameDocument, "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
       $rowData= [];
@@ -24,6 +26,8 @@
       $row++;
     }
     fclose($handle);
+  }else{
+    $responseData['res'] = "ERROR";
   }
 
   $responseData['data'] = $matrixResponse;

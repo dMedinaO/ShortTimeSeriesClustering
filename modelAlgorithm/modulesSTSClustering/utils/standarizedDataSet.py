@@ -30,7 +30,7 @@ class standardizedDataSet(object):
         self.dataset_scaled = preprocessing.scale(self.dataset)
 
     def applyStandarScale(self):#standar scaler
-        self.scaler = self.preprocessing.StandardScaler().fit(self.dataset)
+        self.scaler = preprocessing.StandardScaler().fit(self.dataset)
         self.dataset_scaled = self.scaler.transform(self.dataset)
 
     def applyMinMaxScaler(self):#min max scaler

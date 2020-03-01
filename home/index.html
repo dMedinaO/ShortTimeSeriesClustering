@@ -176,6 +176,20 @@
                           <form id="initNewJob" method="post" class="form-horizontal form-label-left">
 
                             <div class="form-group">
+                               <label class="col-sm-3 control-label">Name of job*</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="nameJob" name="nameJob" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                               <label class="col-sm-3 control-label">Description of job*</label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="descJob" name="descJob" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="optionProcess">Select Option scale values<span class="required">*</span>
                               </label>
 
@@ -184,9 +198,9 @@
                                   <option value="1">Quick scale</option>
                                   <option value="2">Standar scale</option>
                                   <option value="3">Min max scaler</option>
-                                  <option value="4">Quantil Transformation</option>
-                                  <option value="5">Power Transformation</option>
-                                  <option value="0">No apply scaler option</option>
+                                  <option value="4">Max absolute scaler</option>
+                                  <option value="5">Quantil Transformation</option>
+                                  <option value="6">Power Transformation</option>
                                 </select>
                               </div>
                             </div>
@@ -260,7 +274,7 @@
                         </h3>
                       </div>
                       <div class="panel-body">
-                        Please enter files in * .csv or * .tsv format. If the data set presents examples with null characteristics or without information, this examples will be to remove. This tool is for public use and the components associated with the implementation of models are based on the Python Scikit library. The repository of the tool is public and it presents a GPL 3.0 license for non-commercial software use and respecting the characteristics of Free Software. If you use this software or the modules associated with it, please remember the corresponding appointment of the article associated with the tool. Finally, in case of cloning the repository, it is the sole responsibility of the person who makes it to have all the libraries and requirements for a correct use of STSClustering.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                       </div>
                     </div>
                   </div>
@@ -300,6 +314,14 @@
                                   <li class="list-header">Dashboard</li>
 
                                   <li>
+          						                <a href="queryJob/">
+          						                    <i class="fa fa fa-search"></i>
+          						                    <span class="menu-title">Search Job</span><i class="arrow"></i>
+          						                </a>
+
+          						            </li>
+
+                                  <li>
           						                <a href="dataSet/">
           						                    <i class="fa fa fa-archive"></i>
           						                    <span class="menu-title">Data Sets Demo</span><i class="arrow"></i>
@@ -322,15 +344,6 @@
           						                </a>
 
           						            </li>
-
-                                  <li>
-          						                <a href="">
-          						                    <i class="fa fa fa-home"></i>
-          						                    <span class="menu-title">Home</span><i class="arrow"></i>
-          						                </a>
-
-          						            </li>
-
 						            </ul>
 
                     <!--================================-->

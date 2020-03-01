@@ -41,7 +41,7 @@ class summaryStatistics(object):
         dataFrame = dataFrame.drop(['classGroup'], axis=1)
 
         #get statistical values
-        arrayIndex = ["Max Point", "Min Point", "AVG Point", "Variance", "Standar Deviation"]
+        arrayIndex = ["Max_Point", "Min_Point", "AVG_Point", "Variance", "Standar_Deviation"]
         maxData = []
         minData = []
         meanData = []
@@ -59,4 +59,13 @@ class summaryStatistics(object):
         dataExport = pd.DataFrame(responseMatrix, columns=dataFrame.keys())
         dataExport['Property'] = arrayIndex
 
-        return dataExport
+        matrixExportRows = []#cada fila es un atributo
+
+        for i in range(len(maxData)):
+            row = [maxData[i], minData[i], meanData[i], varData[i], stdData[i]]
+            matrixExportRows.append(row)
+
+        dataExportColumns = pd.DataFrame(matrixExportRows, columns=arrayIndex)
+        dataExportColumns['Feature'] = dataFrame.keys()
+
+        return dataExport, dataExportColumns, dataFrame

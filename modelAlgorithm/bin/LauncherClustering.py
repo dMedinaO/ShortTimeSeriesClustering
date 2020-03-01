@@ -49,19 +49,14 @@ class BinaryTree(object):
 
     # Llamada para dividir grupo de forma recursiva
     def split(self, nodo, dataSet, pathResponse, threshold, sizeEval, significancia):
-        #print "Llamando a servicio -> ",dataSet.shape[0]
         callServiceObject = callService.serviceClustering(dataSet, pathResponse, threshold, sizeEval, significancia)
         #callService debe retornar un arreglo en donde [sePuedeDividir,dataFramegrupo1,dataFramegrupo2]
         result = callServiceObject.execProcess()
         if isinstance(result,list):
             if(result[0] == -1):
-                #print "No puedo dividir: ",dataSet.shape[0]
                 dataSet.to_csv(pathResponse+""+str(dataSet.shape[0])+'_'+str(int(round(time.time() * 1000)))+'.csv', index=False)
                 return nodo
             else:
-                print "Dividir -> ",dataSet.shape[0]
-                print "G1: ",result[1].shape[0]
-                print "G2: ",result[2].shape[0]
                 #Los sleep es para generar id unicos por cada dataframe que se agregaal arbol
                 nodo.left = Nodo(result[1])
                 time.sleep(0.05)
@@ -78,7 +73,6 @@ class BinaryTree(object):
 
     # Llamar funcion recursiva para dibujar arbol
     def diagramSplit(self, pathResult) :
-        print "Imprimir"
         tree = gp.Digraph(format='png')
         if(self.top != None):
             self.draw(self.top,tree);
@@ -107,7 +101,6 @@ pathResponse = sys.argv[3]
 threshold = float(sys.argv[4])
 significancia = float(sys.argv[5])
 
-print "Check dataset elements"
 checkElement = checkDataSet.checkDataSet(dataset)
 checkElement.evaluateNullData()
 response_check = checkElement.evaluateTypeData()
@@ -115,7 +108,6 @@ response_check = checkElement.evaluateTypeData()
 if response_check == 0:
     dataset_check = checkElement.dataset
 
-    print "To apply standardization at dataset"
     standarHandler = standarizedDataSet.standardizedDataSet(dataset_check)
 
     if type_scaler == 1:
@@ -132,7 +124,6 @@ if response_check == 0:
         standarHandler.applyPowerTransformation()
 
     dataset_standard = pd.DataFrame(standarHandler.dataset_scaled, columns=dataset.keys())
-    print "Apply recursive clustering"
     #Obtiene la cantida de row del dataSet
     initialSize = dataset_standard.shape[0];
     tree = BinaryTree()
@@ -152,6 +143,8 @@ if response_check == 0:
     command = "mkdir -p %sgroups" % pathResponse
     os.system(command)
 
+    dictGroupResponse = []
+
     indexClass = 1
     for files in listFiles:
         dataFrame = pd.read_csv(files)
@@ -167,15 +160,17 @@ if response_check == 0:
         command = "mv %s %sgroups/%d.csv" % (files, pathResponse, indexClass)
         os.system(command)
 
+        dictGroupResponse.append({"id_group":"Group ID "+str(indexClass), "number":len(dataFrame)})
         indexClass+=1
+
+    #export JSON with information about group
+    with open(pathResponse+"summary_group.json", 'w') as fp:
+        json.dump(dictGroupResponse, fp)
 
     #formamos el conjunto de datos para el entrenamiento del modelo de clasificacion
     dataFrameExport = pd.DataFrame(matrixGroup, columns=dataFrame.keys())
 
     clusteringPerformance = evaluationClustering.evaluationClustering(dataFrameExport, classResponse)
-    print "#################################################################"
-    print "Calinski Performance: ", clusteringPerformance.calinski
-    print "Silhouette score: ", clusteringPerformance.siluetas
 
     #reducimos los datos a la codificacion original
     dataFrameExport = standarHandler.scaler.inverse_transform(dataFrameExport)
@@ -188,18 +183,26 @@ if response_check == 0:
 
     for indexClass in indexClassArray:
         summaryCluster = summaryStatisticsClustering.summaryStatistics(dataFrameExport, indexClass)
-        dataFrameStatisticsGroup = summaryCluster.getValuesForGroup()
+        dataFrameStatisticsGroup, dataFrameExportColumns, dataFrameOriginal = summaryCluster.getValuesForGroup()
 
         #export dataFrame
         nameDoc = "%sgroups/%s_statistical_information.csv" % (pathResponse, indexClass)
         dataFrameStatisticsGroup.to_csv(nameDoc, index=False)
 
+        #export dataFrame to load in csv view
+        nameDoc = "%sgroups/%s_statistical_information_export_csv.csv" % (pathResponse, indexClass)
+        dataFrameExportColumns.to_csv(nameDoc, index=False)
+
+        #export dataFrame with original values
+        nameDoc = "%sgroups/%s_original_values.csv" % (pathResponse, indexClass)
+        dataFrameOriginal.to_csv(nameDoc, index=False)
+
     #make summary file process
     dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "OK", "groups": len(indexClassArray), "calinski": clusteringPerformance.calinski, "siluetas": clusteringPerformance.siluetas}
+    print "OK"
 
 else:
     dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "ERROR", "groups": -1, "calinski": -1, "siluetas": -1}
-    print "Error during check process, please, to check the input data"
-
+    print "ERROR"
 with open(pathResponse+"summary_process.json", 'w') as fp:
     json.dump(dictSummary, fp)

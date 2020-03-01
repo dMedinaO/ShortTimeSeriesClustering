@@ -31,8 +31,6 @@ class checkProcess(object):
         maxCalinski = max(self.dataFrame['calinski_harabaz_score'])
         maxSiluetas = max(self.dataFrame['silhouette_score'])
 
-        print maxCalinski
-        print maxSiluetas
         self.candidato = self.getCandidateIndexScore(maxCalinski, maxSiluetas)
 
     #funcion que permite obtener los candidatos con los valores maximos de calinski y siluetas
@@ -53,9 +51,6 @@ class checkProcess(object):
                 indexCandSil.append(index)
             index+=1
 
-        print indexCandCal
-        print indexCandSil
-
         #buscamos los calisnki que estan en ambas listas, si no existen, solo tomamos el primer elemento
         indexCandidato = -1
 
@@ -75,8 +70,7 @@ class checkProcess(object):
 
         member1= float(member1)/float(total)*100
         member2= float(member2)/float(total)*100
-        print "member1: ", member1
-        print "member2: ", member2
+
         if member1<threshold or member2< threshold:#no cumple con criterio de tamano
             return -1
         else:#si cumple con criterio de tamano
@@ -101,7 +95,6 @@ class checkProcess(object):
                 arrayProportion.append(count)
 
             response=0
-            print arrayProportion
             #evaluamos si existe desbalance
             for proportion in arrayProportion:
                 if proportion <= threshold:
@@ -125,9 +118,8 @@ class checkProcess(object):
         #hacemos la aplicacion de los test
         responseP1 = self.comparePointToPoint(meanG1, meanG2, stdG1, stdG2)
         responseP2 = self.compareUnderCurve(meanG1, meanG2, stdG1, stdG2)
-        responseP3 = self.compareSlopesCurve(meanG1, meanG2, stdG1, stdG2)        
+        responseP3 = self.compareSlopesCurve(meanG1, meanG2, stdG1, stdG2)
 
-        #print responseExtreme
         #aplicamos test de siems
         listPvalue = [responseP1, responseP2, responseP3]
         listPvalue.sort()#ordenamos los valores

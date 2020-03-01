@@ -97,6 +97,7 @@
 
     <script src="../js/resultsProcess/loadCurvesForGroup.js"></script>
     <script src="../js/resultsProcess/viewStatisticsTableGroup.js"></script>
+    <script src="../js/resultsProcess/loadCurvesForGroup.js"></script>
 </head>
 
 <!--TIPS-->
@@ -193,8 +194,8 @@
                                 <tr>
                                   <th class="min-tablet">Feature</th>
                                   <th class="min-tablet">Average</th>
-                                  <th class="min-tablet">Standar Deviation</th>
                                   <th class="min-tablet">Variance</th>
+                                  <th class="min-tablet">Standar Deviation</th>
                                   <th class="min-tablet">Max Value</th>
                                   <th class="min-tablet">Min Value</th>
                                 </tr>
@@ -202,7 +203,7 @@
                           </table>
                         </div>
                     </div>
-                  </div>
+                  </div>                  
                 </div>
               </div>
             </div>

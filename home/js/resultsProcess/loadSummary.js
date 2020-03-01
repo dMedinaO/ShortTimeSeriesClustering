@@ -52,6 +52,45 @@ var definitions = function loadDefinition() {
 		$(".siluetas").html(data.siluetas);
     $(".number").html(data.groups);
 
+    //load pie chart with information of groups...
+    var dataPie = [{
+      values: data.numberElementGroupArray,
+      labels: data.indexGroupArray,
+      type: 'pie'
+    }];
+
+    Plotly.newPlot('graphMembers', dataPie);
+
+    //load mean curve per group
+    var lengthData = data.numberElementGroupArray.length;
+
+    //to create trace for each group
+    var dataLines =[];
+    for (i=0; i<lengthData; i++){
+
+      //obtenemos la data para formar la fila
+      //generamos el trace
+      var trace = {
+        y: data.AVG_Curves[i],
+        x:data.features,
+        mode: 'lines+markers',
+        name: data.indexArrayID[i],
+        line: {shape: 'linear'},
+        type: 'scatter'
+      };
+      dataLines[i]=trace;
+    }
+
+    layout = {
+      legend: {
+        y: 0.5,
+        traceorder: 'reversed',
+        font: {size: 16},
+        yref: 'paper'
+      }
+    };
+
+    Plotly.react('curveGroups', dataLines, layout);
 	});
 
 }

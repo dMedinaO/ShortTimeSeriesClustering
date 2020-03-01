@@ -63,7 +63,7 @@ function showCurves() {
         x: header,
         mode: 'lines+markers',
         name: nameE,
-        line: {shape: 'spline'},
+        line: {shape: 'linear'},
         type: 'scatter'
       };
 

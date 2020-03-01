@@ -70,6 +70,22 @@
   <script src="../plugins/datatables/media/js/dataTables.bootstrap.js"></script>
   <script src="../plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 
+  <!-- para los higcharts-->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- para los higcharts-->
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts-more.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/series-label.js"></script>
+  <script src="http://code.highcharts.com/modules/heatmap.js"></script>
+
+  <script src="http://d3js.org/d3.v4.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+  <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+
   <!-- javascript process information -->
   <script src="../js/resultsProcess/loadSummary.js"></script>
 </head>
@@ -156,9 +172,39 @@
                       <div class="panel-body">
                         <?php
                           echo "<a href=\"../../jobs/".$_GET['job']."/results/tree.png\">";
-                          echo "<img src=\"../../jobs/".$_GET['job']."/results/tree.png\" alt=\"\">";
+                          echo "<img src=\"../../jobs/".$_GET['job']."/results/tree.png\" alt=\"\" class=\"img-thumbnail\">";
                           echo "</a>";
                         ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6">
+
+                    <div class="panel panel-bordered panel-primary">
+
+                      <div class="panel-heading">
+                        <h3 class="panel-title">
+                          Members by group
+                        </h3>
+                      </div>
+                      <div class="panel-body">
+                        <div id="graphMembers"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6">
+
+                    <div class="panel panel-bordered panel-primary">
+
+                      <div class="panel-heading">
+                        <h3 class="panel-title">
+                          Average curve per group
+                        </h3>
+                      </div>
+                      <div class="panel-body">
+                        <div id="curveGroups"></div>
                       </div>
                     </div>
                   </div>
@@ -329,15 +375,7 @@
                                 <ul id="mainnav-menu" class="list-group">
 
                                   <li class="list-header">Dashboard</li>
-
-                                  <li>
-          						                <a href="../queryJob/">
-          						                    <i class="fa fa fa-search"></i>
-          						                    <span class="menu-title">Search Job</span><i class="arrow"></i>
-          						                </a>
-
-          						            </li>
-
+                                  
                                   <li>
           						                <a href="../dataSet/">
           						                    <i class="fa fa fa-archive"></i>

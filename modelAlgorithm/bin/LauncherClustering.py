@@ -145,6 +145,9 @@ if response_check == 0:
 
     dictGroupResponse = []
 
+    indexGroupArray = []
+    numberElementGroupArray = []
+
     indexClass = 1
     for files in listFiles:
         dataFrame = pd.read_csv(files)
@@ -161,6 +164,8 @@ if response_check == 0:
         os.system(command)
 
         dictGroupResponse.append({"id_group":"Group ID "+str(indexClass), "number":len(dataFrame)})
+        indexGroupArray.append("Group ID "+str(indexClass))
+        numberElementGroupArray.append(len(dataFrame))
         indexClass+=1
 
     #export JSON with information about group
@@ -181,6 +186,9 @@ if response_check == 0:
     #trabajamos las estadisticas de cada grupo...
     indexClassArray = list(set(dataFrameExport['classGroup']))
 
+    matrixMeanGroup = []
+    indexClassID = []
+
     for indexClass in indexClassArray:
         summaryCluster = summaryStatisticsClustering.summaryStatistics(dataFrameExport, indexClass)
         dataFrameStatisticsGroup, dataFrameExportColumns, dataFrameOriginal = summaryCluster.getValuesForGroup()
@@ -188,17 +196,26 @@ if response_check == 0:
         #export dataFrame
         nameDoc = "%sgroups/%s_statistical_information.csv" % (pathResponse, indexClass)
         dataFrameStatisticsGroup.to_csv(nameDoc, index=False)
-
         #export dataFrame to load in csv view
         nameDoc = "%sgroups/%s_statistical_information_export_csv.csv" % (pathResponse, indexClass)
         dataFrameExportColumns.to_csv(nameDoc, index=False)
+
+        row = []
+        for element in dataFrameExportColumns['AVG_Point']:
+            row.append(element)
+        matrixMeanGroup.append(row)
+        indexClassID.append("Group ID "+str(indexClass))
 
         #export dataFrame with original values
         nameDoc = "%sgroups/%s_original_values.csv" % (pathResponse, indexClass)
         dataFrameOriginal.to_csv(nameDoc, index=False)
 
+    featureArray = []
+    for key in dataFrameOriginal.keys():
+        featureArray.append(key)
+
     #make summary file process
-    dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "OK", "groups": len(indexClassArray), "calinski": clusteringPerformance.calinski, "siluetas": clusteringPerformance.siluetas}
+    dictSummary = {"fileInput": sys.argv[1].split("/")[-1], "status": "OK", "groups": len(indexClassArray), "calinski": clusteringPerformance.calinski, "siluetas": clusteringPerformance.siluetas, "indexGroupArray":indexGroupArray, "numberElementGroupArray":numberElementGroupArray, "AVG_Curves":matrixMeanGroup, "indexArrayID":indexClassID, "features":featureArray}
     print "OK"
 
 else:

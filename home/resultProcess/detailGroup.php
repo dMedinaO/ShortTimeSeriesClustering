@@ -113,7 +113,7 @@
                 <!--Brand logo & name-->
                 <!--================================-->
 								<div class="navbar-header">
-                    <a href="" class="navbar-brand">
+                    <a href="../" class="navbar-brand">
                         <img src="../img/logo.png" alt="Nifty Logo" class="brand-icon">
                         <div class="brand-title">
                             <span class="brand-text">STSClustering</span>
@@ -203,7 +203,7 @@
                           </table>
                         </div>
                     </div>
-                  </div>                  
+                  </div>
                 </div>
               </div>
             </div>
@@ -259,15 +259,7 @@
           						                    <span class="menu-title">How to use</span><i class="arrow"></i>
           						                </a>
 
-          						            </li>
-
-                                  <li>
-          						                <a href="../">
-          						                    <i class="fa fa fa-home"></i>
-          						                    <span class="menu-title">Home</span><i class="arrow"></i>
-          						                </a>
-
-          						            </li>
+          						            </li>                                  
 
 						            </ul>
 

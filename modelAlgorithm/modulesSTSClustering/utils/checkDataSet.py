@@ -27,12 +27,10 @@ class checkDataSet(object):
     def evaluateNullData(self):
 
         self.dataset = self.dataset.dropna(how='any',axis=0)
-
     #to check values if there are string o characters in dataset
     def evaluateTypeData(self):
 
         response = 0
-
         for i in range(len(self.dataset)):
             for key in self.dataset.keys():
                 try:

@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (C) 2019  David Medina Ortiz, david.medina@cebib.cl
+# Copyright (C) 2020  David Medina Ortiz, david.medina@cebib.cl
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,16 +22,6 @@ import math
 from scipy import special
 
 class checkProcess(object):
-
-    def __init__(self, dataFrame):
-
-        self.dataFrame = dataFrame
-
-        #obtenemos los maximos coeficientes
-        maxCalinski = max(self.dataFrame['calinski_harabaz_score'])
-        maxSiluetas = max(self.dataFrame['silhouette_score'])
-
-        self.candidato = self.getCandidateIndexScore(maxCalinski, maxSiluetas)
 
     #funcion que permite obtener los candidatos con los valores maximos de calinski y siluetas
     def getCandidateIndexScore(self, maxCalinski, maxSiluetas):

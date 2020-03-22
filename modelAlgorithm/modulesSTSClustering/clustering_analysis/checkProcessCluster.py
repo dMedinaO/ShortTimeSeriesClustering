@@ -165,7 +165,7 @@ class checkProcess(object):
         statistic = 0
 
         for i in range(len(meanG1)-1):
-            num = (float(meanG2[i]) - float(meanG1[i]) + float(meanG2[i+1]) - float(meanG1[i+1]))**2
+            num = (float(meanG2[i]) - float(meanG1[i]) - float(meanG2[i+1]) + float(meanG1[i+1]))**2
             den = float(stdG1[i])**2 + float(stdG2[i])**2 + float(stdG1[i+1])**2 + float(stdG2[i+1])**2
             statistic+= float(num)/float(den)
 
